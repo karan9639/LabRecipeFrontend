@@ -18,6 +18,15 @@ import ViewRecipe from "./pages/ViewRecipe";
 // Protected route component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuthStore();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null; // or a loading spinner
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
